@@ -7,6 +7,7 @@
 
 CC	= clang
 CFLAGS = -O2 -std=c11 -I../include
+LDFLAGS	= -lzmq
 
 SRC		= model.c
 OBJ		= model.o
@@ -18,7 +19,7 @@ EXE		= model
 all: model
 
 model: $(OBJ)
-		$(CC) -o $@ $(OBJ) $(LDFLAGS)
+		$(CC) $(CFLAGS) -o $@ $(OBJ) $(LDFLAGS)
 
 clean:
 	rm -f $(EXE) *.o
