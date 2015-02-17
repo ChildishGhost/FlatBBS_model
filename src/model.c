@@ -15,15 +15,25 @@ int main (void) {
     char input [2048];
     char output [2048];
 
+    int counter = 1;
+    FILE *fp;
+    fp = fopen("log", "w");
+    if (!fp) {
+        puts("no file pointer");
+    }
 
     while (1) {
         memset(input, 0, 2048);
         memset(output, 0, 2048);
         zmq_recv(zmq_server, input, 2048, ZMQ_DONTWAIT);
 
-        // do some stuffs here
-        printf("%s", input);
-        sprintf(output, "%s", input);
+        if (input[0]) {
+            // do some stuffs here
+            sprintf(output, "%s: %d", input, counter);
+            fprintf(fp, "%s %d\n", input, counter);
+            fflush(fp);
+            counter++;
+        }
 
         zmq_send(zmq_server, output, 2048, ZMQ_DONTWAIT);
     }
