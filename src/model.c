@@ -5,6 +5,17 @@
 #include <unistd.h>
 #include <string.h>
 #include <assert.h>
+#include <sys/time.h>
+
+
+
+// stolen usleep from maple
+#define usleep(usec) {                              \
+        struct timeval t;                           \
+        t.tv_sec = usec / 1000000;                  \
+        t.tv_usec = usec % 1000000;                 \
+        select( 0, NULL, NULL, NULL, &t);           \
+}
 
 int main (void) {
     //  Socket to talk to clients
@@ -34,8 +45,13 @@ int main (void) {
             fflush(fp);
             counter++;
         }
+        // make cpu take a rest
+        usleep (10);
 
         zmq_send(zmq_server, output, 2048, ZMQ_DONTWAIT);
     }
+
+    zmq_close(zmq_server);
+    zmq_ctx_destroy(zmq_context);
     return 0;
 }
