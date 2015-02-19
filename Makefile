@@ -8,7 +8,7 @@
 all:
 	#@cd lib; make
 	@cd src; make
-	@cd util; make
+	#@cd util; make
 
 clean:
 	#@cd lib; make clean
