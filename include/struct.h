@@ -22,7 +22,7 @@ typedef char32_t utf8;
 // example of log:
 // [<time>][<IP>][<FQDN>]: <content>
 
-struct user_log {
+struct USER_LOG {
   time_t time;                     /* timestamp */
   char IP[50];                     /* IPv6 max = 45 */
   char FQDN[50];                   /* reverse lookup */
@@ -44,7 +44,7 @@ enum PERMISSION {
   BOT                              /* 特殊權限 */
 };
 
-struct user_extra {
+struct USER_EXTRA {
   unsigned char month;             /* 生日(月) */
   unsigned char day;               /* 生日(日) */
   enum SEX sex;
@@ -52,7 +52,7 @@ struct user_extra {
   unsigned gold;                   /* 金幣 */
 };
 
-struct user_base {
+struct USER_BASE {
   unsigned uid;                    /* unique user ID */
 
   char username[20];
@@ -64,18 +64,18 @@ struct user_base {
   unsigned ufo;                    /* preference */
   unsigned char signature;         /* 預設簽名檔編號 (0~10)*/
 
-  unsigned numlogins;              /* 上站次數 */
-  unsigned numposts;               /* 發表次數 */
+  unsigned num_logins;              /* 上站次數 */
+  unsigned num_posts;               /* 發表次數 */
   unsigned good_article;           /* 優文 */
   unsigned bad_article;            /* 劣文 */
 
-  time_t firstlogin;               /* 第一次上站時間 */
-  time_t lastlogin;                /* 上一次上站時間 */
+  time_t first_login;               /* 第一次上站時間 */
+  time_t last_login;                /* 上一次上站時間 */
   unsigned long long staytime;     /* 總共停留時間 (s) */
 
   utf8 email[100];
-  struct user_log log;
-  struct user_extra extra;         /* 雜七雜八 */
+  struct USER_LOG log;
+  struct USER_EXTRA extra;         /* 雜七雜八 */
 };
 
 // user (un)read alert system
@@ -102,8 +102,8 @@ enum BOARD_PERM {                  /* 公開 好友 隱版 */
 
 
 // board header
-// the .BRD file stands for an array of board headers
-// the index of structures in the . BRD file gives the bid for each board
+// the BRD file stands for an array of board headers
+// the index of structures in the BRD file gives the bid for each board
 //
 // the directory layout for boards
 //
@@ -112,7 +112,7 @@ enum BOARD_PERM {                  /* 公開 好友 隱版 */
 //                 /inner/[A-Z0-9]/<AID>   // 精華區
 //                 /inner/ blah blah blah  // implementation of inner posts
 //                 /POSTS                  // post index
-//                 /pinned                 // 置底文，index to POSTS
+//                 /PINNED                 // 置底文，index to POSTS
 //
 // For example, there are 3 posts in the board <board name>
 // there will be three files under the posts directory
@@ -124,7 +124,7 @@ enum BOARD_PERM {                  /* 公開 好友 隱版 */
 //
 //                      /POSTS
 //
-//                      /PINindex
+//                      /PINNED
 //                          2          this refers to POSTS[2]
 
 struct BRD {
