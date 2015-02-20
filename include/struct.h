@@ -2,6 +2,9 @@
 #include <time.h>
 #include <uchar.h>
 
+#ifndef STRUCT_H
+#define STRUCT_H
+
 // TODO: need some wrappers of mb* functions to higher order operations
 typedef char32_t utf8;
 
@@ -213,3 +216,5 @@ struct TREE_NODE {
   unsigned id;                     /* class id or board id*/
 };
 
+
+#endif /* STRUCT_H */
