@@ -1,4 +1,5 @@
 #include "struct.h"
+#include "api.h"
 
 #include <zmq.h>
 #include <stdio.h>
