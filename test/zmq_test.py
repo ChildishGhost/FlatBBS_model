@@ -9,14 +9,16 @@ import zmq
 context = zmq.Context()
 
 socket = context.socket(zmq.REQ)
-socket.connect("tcp://localhost:5555")
+socket.connect("tcp://localhost:5566")
+
 
 i = 1
 while True:
     req = "# {}:{}\x00".format(os.getpid(), i)
-    print(">> {}".format(req))
+    req *= 100
+    #print(">> {}".format(req))
     socket.send(req.encode())
     message = socket.recv()
-    print("<< {} ".format(message.decode()))
-    time.sleep(0.5)
+    #print("<< {} ".format(message.decode()))
+    time.sleep(0.0001)
     i += 1
