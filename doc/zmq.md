@@ -4,6 +4,8 @@
 
 We're using ZMQ [4.0 API](http://api.zeromq.org/4-0:_start)
 
+[PTT's mq stuffs](https://github.com/clkao/pttbbs/blob/master/pttbbs/mbbsd/bbsmq.c)
+
 
 ## common patterns
 
