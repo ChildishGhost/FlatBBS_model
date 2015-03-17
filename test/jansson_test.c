@@ -1,7 +1,9 @@
-#include <string.h>
-#include <jansson.h>
-#include <uchar.h>
 #include "struct.h"
+
+#include <jansson.h>
+
+#include <string.h>
+#include <uchar.h>
 
 
 // this is the test program for Jansson APIs
@@ -62,6 +64,19 @@ int main (void) {
         printf("%d == 2\n", (int)json_array_size(t));
 
     }
+
+    char text2[] = "{ \"api\" : \"board_list\" , \"param\" : {} }";
+    char text3[] = "{ \"api\" : \"board_length\" , \"param\" : {} }";
+
+    root = json_loads(text2, 0, &error);
+    char *dd = json_dumps(root, 0);
+    puts(dd);
+    free(dd);
+    root = json_loads(text3, 0, &error);
+    dd = json_dumps(root, 0);
+    puts(dd);
+    free(dd);
+
 
     return 0;
 
