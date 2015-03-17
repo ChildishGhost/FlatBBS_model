@@ -22,7 +22,7 @@
         select( 0, NULL, NULL, NULL, &t);           \
 }
 
-// used by zma_msg_init_data
+// used by zmq_msg_init_data
 // http://api.zeromq.org/4-0:zmq-msg-init-data
 void __zmq_free_init_data (void *data, void *hint) {
     free(data);
