@@ -1,5 +1,6 @@
-#include "struct.h"
 #include "api.h"
+#include "json.h"
+#include "struct.h"
 
 #include <zmq.h>
 
@@ -23,9 +24,74 @@
 
 // used by zma_msg_init_data
 // http://api.zeromq.org/4-0:zmq-msg-init-data
-void __zmq_free_init_data(void *data, void *hint) {
+void __zmq_free_init_data (void *data, void *hint) {
     free(data);
+    data = NULL;
 }
+
+
+// dispatch a message to a coresponding API call
+// returning a message to be sent to ZMQ
+void dispatch (const char *buf_i, const size_t size_i,
+                     char **buf_o, size_t *size_o) {
+
+    if (!buf_i || !size_i) {
+        *buf_o = NULL;
+        *size_o = 0;
+        return;
+    }
+
+    const long aid_index = 0;
+    const unsigned bid = 0;
+    const unsigned uid = 0;
+    const unsigned length = 0;
+    const unsigned offset = 0;
+    const char *cpath = NULL;
+
+    char *API_name = get_API_name(buf_i);
+    if (API_name) {
+        if (!strcmp(API_name, "board_list")) {
+            *buf_o = board_list(offset, length);
+        }
+        else if (!strcmp(API_name, "board_length")) {
+            *buf_o = board_length();
+        }
+        else if (!strcmp(API_name, "board_post_list")) {
+            *buf_o = board_post_list(bid, offset, length);
+        }
+        else if (!strcmp(API_name, "board_post_length")) {
+            *buf_o = board_post_length(bid);
+        }
+        else if (!strcmp(API_name, "board_inner_post_list")) {
+            *buf_o = board_inner_post_list(bid, offset, length);
+        }
+        else if (!strcmp(API_name, "board_inner_post_length")) {
+            *buf_o = board_inner_post_length (bid);
+        }
+        else if (!strcmp(API_name, "user_fav_list")) {
+            *buf_o = user_fav_list(uid, offset, length);
+        }
+        else if (!strcmp(API_name, "user_fav_list_length")) {
+            *buf_o = user_fav_list_length(uid);
+        }
+        else if (!strcmp(API_name, "board_post_path")) {
+            *buf_o = board_post_path(bid, aid_index);
+        }
+        else if (!strcmp(API_name, "class_items_list")) {
+            *buf_o = class_items_list(cpath);
+        }
+        else {
+            fprintf(stderr, "API [%s] not found\n", API_name);
+            *buf_o = NULL;
+        }
+    }
+
+    *size_o = *buf_o ? strlen(*buf_o) : 0;
+    free(API_name);
+    API_name = NULL;
+
+}
+
 
 int main (void) {
     //  Socket to talk to clients
@@ -67,9 +133,15 @@ int main (void) {
                 fflush(stdout);
                 fflush(fp);
 
-                // do some stuffs here, this is a ping-pong demo
-                output_size = input_size;
-                zmq_msg_init_data (&output, buf, output_size,
+                char *buf_o = NULL;
+
+                // dispatch API calls, this will return JSON strings of results
+                dispatch(buf, input_size, &buf_o, &output_size);
+
+                free(buf);
+                buf = NULL;
+
+                zmq_msg_init_data (&output, buf_o, output_size,
                                    __zmq_free_init_data, NULL);
 
 
