@@ -6,8 +6,8 @@
 # ------------------------------------------------------ #
 
 CC	= clang
-CFLAGS = -O2 -std=c11 -I../include
-LDFLAGS	= -lzmq
+CFLAGS = -O2 -std=c11 -I../include -Wall -Wextra -pedantic
+LDFLAGS	= -lzmq -ljansson
 
 SRC		= model.c
 OBJ		= model.o
