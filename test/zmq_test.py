@@ -12,13 +12,22 @@ socket = context.socket(zmq.REQ)
 socket.connect("tcp://localhost:5566")
 
 
-i = 1
-while True:
-    req = "# {}:{}\x00".format(os.getpid(), i)
-    req *= 100
-    #print(">> {}".format(req))
+def api(req):
+    req += "\x00"
+    print(">> {}".format(req))
     socket.send(req.encode())
     message = socket.recv()
-    #print("<< {} ".format(message.decode()))
+    print("<< {} ".format(message.decode()))
     time.sleep(0.0001)
-    i += 1
+
+for i in range(10):
+    api('{ "api" : "board_list" ,              "param" : {} }');
+    api('{ "api" : "board_length" ,            "param" : {} }');
+    api('{ "api" : "board_post_list" ,         "param" : {} }');
+    api('{ "api" : "board_post_length" ,       "param" : {} }');
+    api('{ "api" : "board_inner_post_list" ,   "param" : {} }');
+    api('{ "api" : "board_inner_post_length" , "param" : {} }');
+    api('{ "api" : "user_fav_list" ,           "param" : {} }');
+    api('{ "api" : "user_fav_list_length" ,    "param" : {} }');
+    api('{ "api" : "board_post_path" ,         "param" : {} }');
+    api('{ "api" : "class_items_list" ,        "param" : {} }');
