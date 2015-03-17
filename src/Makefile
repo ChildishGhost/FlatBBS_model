@@ -9,8 +9,8 @@ CC	= clang
 CFLAGS = -O2 -std=c11 -I../include -Wall -Wextra -pedantic
 LDFLAGS	= -lzmq -ljansson
 
-SRC		= model.c api.c
-OBJ		= model.o api.o
+SRC		= model.c api.c json.c
+OBJ		= model.o api.o json.o
 EXE		= model
 
 
