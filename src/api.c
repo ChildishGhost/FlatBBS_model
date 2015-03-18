@@ -1,4 +1,5 @@
 #include "api.h"
+#include "board.h"
 
 // all boards list
 char *board_list (const unsigned offset, const unsigned length) {
@@ -9,10 +10,7 @@ char *board_list (const unsigned offset, const unsigned length) {
 
 char *board_length (void) {
     fprintf(stdout, "%s\n", __func__);
-
-    unsigned board_length = 5566;
-
-    return make_json(50, "{ \"length\" : %d }", board_length);
+    return make_json(50, "{ \"length\" : %d }", BRD_length());
 }
 
 // all posts of one board
