@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <time.h>
 
 #ifndef STRUCT_H
@@ -34,17 +35,17 @@ struct USER_LOG {
 };
 
 enum SEX {
-  UNKNOWN,                         /* 中性（不透露）*/
-  MALE,
-  FEMALE
+  SEX_UNKNOWN,                         /* 中性（不透露）*/
+  SEX_MALE,
+  SEX_FEMALE
 };
 
 enum PERMISSION {
-  SYSOP,                           /* 站長 */
-  ADMIN,                           /* 站務 */
-  USER,
-  GUEST,                           /* 未驗證完成帳號 */
-  BOT                              /* 特殊權限 */
+  PERM_SYSOP,                           /* 站長 */
+  PERM_ADMIN,                           /* 站務 */
+  PERM_USER,
+  PERM_GUEST,                           /* 未驗證完成帳號 */
+  PERM_BOT                              /* 特殊權限 */
 };
 
 struct USER_EXTRA {
@@ -92,15 +93,15 @@ struct USR_READ {
 // ------------------------------------------+
 
 enum VOTE_STATUS {                 /* 0:無投票 1:有投票 2:有賭盤 */
-  NONE,
-  VOTE,
-  ROUTLETTE
+  VOTE_NONE,
+  VOTE_VOTEING,
+  VOTE_ROUTLETTE
 };
 
 enum BOARD_PERM {                  /* 公開 好友 隱版 */
-  PUBLIC,
-  PRIVATE,
-  SECRET
+  BOARD_PUBLIC,
+  BOARD_PRIVATE,
+  BOARD_SECRET
 };
 
 
@@ -169,9 +170,9 @@ struct CLS {                       /* CLASS */
 };
 
 enum NODE_TYPE {
-  ROOT,
-  CLASS,
-  BOARD
+  NODE_ROOT,
+  NODE_CLASS,
+  NODE_BOARD
 };
 
 //
@@ -220,55 +221,8 @@ struct TREE_NODE {
 };
 
 // functions
-//void *_read_struct_from_file (size_t, unsigned, FILE *);
-void *_read_struct_from_file (size_t sz, unsigned index, FILE *file) {
-
-    void *obj = malloc(sz);
-    if (!sz || !file || !obj) {
-        fprintf(stderr,"error in %s\n", __func__);
-        return NULL;
-    }
-
-    if (fseek(file, sz * index, SEEK_SET)) {
-        if (ferror(file)) {
-            fprintf(stderr,"error on fseek() in %s\n", __func__);
-            return NULL;
-        }
-    }
-
-
-    if (fread(obj, sz, 1, file) != 1) {
-        fprintf(stderr,"error on fread() in %s %d\n", __func__);
-        return NULL;
-    }
-
-    return obj;
-}
-
-//int _write_struct_from_file (void *, size_t, unsigned, FILE *);
-int _write_struct_from_file (void *obj, size_t sz, unsigned index, FILE *file) {
-    if (!sz || !file || !obj) {
-        fprintf(stderr,"error in %s\n", __func__);
-        return 1;
-    }
-
-    if (fseek(file, sz * index, SEEK_SET)) {
-        if (ferror(file)) {
-            fprintf(stderr,"error on fseek() in %s\n", __func__);
-            return 1;
-        }
-    }
-
-
-    if (fwrite(obj, sz, 1, file) != 1) {
-        if (ferror(file)) {
-            fprintf(stderr,"error on fwrite() in %s\n", __func__);
-            return 1;
-        }
-    }
-
-    return 0;
-
-}
+void *read_struct_from_file (size_t, unsigned, FILE *);
+int write_struct_from_file (void *, size_t, unsigned, FILE *);
+int struct_count_of_file (size_t, FILE *);
 
 #endif /* STRUCT_H */

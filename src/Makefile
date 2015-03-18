@@ -7,10 +7,10 @@
 
 CC	= clang
 CFLAGS = -O2 -std=c11 -I../include -Wall -Wextra -pedantic
-LDFLAGS	= -lzmq -ljansson
+LDFLAGS	= -lzmq -ljansson `pkg-config --libs --cflags icu-uc icu-io`
 
-SRC		= model.c api.c json.c
-OBJ		= model.o api.o json.o
+SRC		= model.c api.c json.c struct.c
+OBJ		= model.o api.o json.o struct.o
 EXE		= model
 
 
