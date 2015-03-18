@@ -40,8 +40,8 @@ int save_brd (struct BRD *brd, int idx) {
     FILE *fp = fopen(BRD_PATH, "w");
     if (fp) {
         idx = write_struct_from_file (brd, sizeof(struct BRD), idx, fp);
+        fclose(fp);
     }
-    fclose(fp);
 
     return idx;
 }
@@ -57,8 +57,8 @@ struct BRD *load_brd (int idx) {
     FILE *fp = fopen(BRD_PATH, "r");
     if (fp) {
         brd = read_struct_from_file (sizeof(struct BRD), idx, fp);
+        fclose(fp);
     }
-    fclose(fp);
 
     return brd;
 }
@@ -69,8 +69,8 @@ int BRD_length (void) {
     FILE *fp = fopen(BRD_PATH, "r");
     if (fp) {
         board_length = struct_count_of_file(sizeof(struct BRD), fp);
+        fclose(fp);
     }
-    fclose(fp);
 
     return board_length;
 }
