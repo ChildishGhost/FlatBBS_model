@@ -1,12 +1,15 @@
+#include <unicode/ustdio.h>
+#include <unicode/ustring.h>
+
 #include <stdio.h>
+#include <stdlib.h>
 #include <time.h>
-#include <uchar.h>
 
 #ifndef STRUCT_H
 #define STRUCT_H
 
 // TODO: need some wrappers of mb* functions to higher order operations
-typedef char32_t utf8;
+typedef UChar utf8;
 
 // ------------------------------------------+
 // user related structures and enumerators   |
@@ -216,5 +219,56 @@ struct TREE_NODE {
   unsigned id;                     /* class id or board id*/
 };
 
+// functions
+//void *_read_struct_from_file (size_t, unsigned, FILE *);
+void *_read_struct_from_file (size_t sz, unsigned index, FILE *file) {
+
+    void *obj = malloc(sz);
+    if (!sz || !file || !obj) {
+        fprintf(stderr,"error in %s\n", __func__);
+        return NULL;
+    }
+
+    if (fseek(file, sz * index, SEEK_SET)) {
+        if (ferror(file)) {
+            fprintf(stderr,"error on fseek() in %s\n", __func__);
+            return NULL;
+        }
+    }
+
+
+    if (fread(obj, sz, 1, file) != 1) {
+        fprintf(stderr,"error on fread() in %s %d\n", __func__);
+        return NULL;
+    }
+
+    return obj;
+}
+
+//int _write_struct_from_file (void *, size_t, unsigned, FILE *);
+int _write_struct_from_file (void *obj, size_t sz, unsigned index, FILE *file) {
+    if (!sz || !file || !obj) {
+        fprintf(stderr,"error in %s\n", __func__);
+        return 1;
+    }
+
+    if (fseek(file, sz * index, SEEK_SET)) {
+        if (ferror(file)) {
+            fprintf(stderr,"error on fseek() in %s\n", __func__);
+            return 1;
+        }
+    }
+
+
+    if (fwrite(obj, sz, 1, file) != 1) {
+        if (ferror(file)) {
+            fprintf(stderr,"error on fwrite() in %s\n", __func__);
+            return 1;
+        }
+    }
+
+    return 0;
+
+}
 
 #endif /* STRUCT_H */
