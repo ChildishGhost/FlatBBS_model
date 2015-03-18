@@ -27,13 +27,13 @@ Ref: [API Ref](https://ssl.icu-project.org/apiref/icu4c/)
 
 ## types
 
-    - `UChar *` represents a pointer to a Unicode string
+- `UChar *` represents a pointer to a Unicode string
 
-    - `char *` represents a pointer to a C string (raw data)
+- `char *` represents a pointer to a C string (raw data)
 
-    - `sizeof(UChar) == 2` (on my machine)
+- `sizeof(UChar) == 2` (on my machine)
 
-    - `sizeof(char) == 1` (C standard)
+- `sizeof(char) == 1` (C standard)
 
 
 ## string literals
