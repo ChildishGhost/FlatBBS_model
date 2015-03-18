@@ -1,7 +1,5 @@
 #include "json.h"
 
-#include <stdarg.h>
-
 // shortcuts for jansson APIs
 static json_t     *(*_get)(const json_t *, const char *) = json_object_get;
 static const char *(*_s)(const json_t *) = json_string_value;

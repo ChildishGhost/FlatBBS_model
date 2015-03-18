@@ -1,5 +1,9 @@
 #include "struct.h"
 
+#include "json.h"
+
+#include <stdlib.h>
+#include <string.h>
 
 #ifndef API_H
 #define API_H

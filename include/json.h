@@ -2,6 +2,7 @@
 
 #include <jansson.h>
 
+#include <stdarg.h>
 #include <string.h>
 
 #ifndef JSON_H

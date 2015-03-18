@@ -1,8 +1,4 @@
 #include "api.h"
-#include "json.h"
-
-#include <stdlib.h>
-#include <string.h>
 
 // all boards list
 char *board_list (const unsigned offset, const unsigned length) {
