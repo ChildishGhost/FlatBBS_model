@@ -9,7 +9,6 @@
 #ifndef STRUCT_H
 #define STRUCT_H
 
-// TODO: need some wrappers of mb* functions to higher order operations
 typedef UChar utf8;
 
 // ------------------------------------------+
