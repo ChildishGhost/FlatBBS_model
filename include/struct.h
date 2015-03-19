@@ -9,6 +9,11 @@
 #ifndef STRUCT_H
 #define STRUCT_H
 
+// this macro is stolen from here
+// https://stackoverflow.com/questions/3553296/c-sizeof-single-struct-member
+#define member_size(type, member) (sizeof(((type *)0)->member))
+#define member_length(type, member, type2) (sizeof(((type *)0)->member) / sizeof(type2))
+
 typedef UChar utf8;
 
 // ------------------------------------------+
