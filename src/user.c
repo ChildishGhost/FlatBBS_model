@@ -1,6 +1,6 @@
 #include "user.h"
 
-unsigned user_name2id (const char *username) {
+unsigned user_name2uid (const char *username) {
     if (!username) {
         return 0;
     }

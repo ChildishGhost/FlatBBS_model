@@ -94,7 +94,7 @@ unsigned int *get_masters (const char *buf_i) {
     unsigned *masters = (unsigned *)malloc(member_size(struct BRD, masters));
 
     for (int i = 0; i < member_length(struct BRD, masters, unsigned); i++) {
-        masters[i] = count ? user_name2id(_s(json_array_get(masters_arr, i))) :
+        masters[i] = count ? user_name2uid(_s(json_array_get(masters_arr, i))) :
                              0;
     }
 
