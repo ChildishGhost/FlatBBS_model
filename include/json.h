@@ -12,7 +12,7 @@
 //
 // all interface should be C types like int or char *
 
-char *get_API_name (const char *buf_i);
+char *get_API_name (const char *);
 
 char *make_stub (void);
 char *make_json (unsigned, const char *, ...);
