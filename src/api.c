@@ -68,8 +68,8 @@ char *class_items_list (const char *cpath) {
 
 char *utf8_test (const char *buf) {
     char *buf_o = (char *)malloc(sizeof(char) * 1000);
-    UChar *u_str = (UChar *)malloc(sizeof(UChar) * 1000);
-    UChar *u_str2 = (UChar *)malloc(sizeof(UChar) * 1000);
+    utf8 *u_str = (utf8 *)malloc(sizeof(utf8) * 1000);
+    utf8 *u_str2 = (utf8 *)malloc(sizeof(utf8) * 1000);
 
     u_uastrncpy (u_str, buf, 1000);
     u_printf("%s (%d) -> %S (%d)\n", buf, strnlen(buf, 100), u_str, u_strlen(u_str));
