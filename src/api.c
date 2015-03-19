@@ -65,3 +65,20 @@ char *class_items_list (const char *cpath) {
 
     return make_stub();
 }
+
+char *utf8_test (const char *buf) {
+    char *buf_o = (char *)malloc(sizeof(char) * 1000);
+    UChar *u_str = (UChar *)malloc(sizeof(UChar) * 1000);
+    UChar *u_str2 = (UChar *)malloc(sizeof(UChar) * 1000);
+
+    u_uastrncpy (u_str, buf, 1000);
+    u_printf("%s (%d) -> %S (%d)\n", buf, strnlen(buf, 100), u_str, u_strlen(u_str));
+
+    U_STRING_DECL(fmt, "(づ｡◕‿‿◕｡)づ 抓到 API: %S", 1000);
+    u_sprintf_u(u_str2, fmt, u_str);
+    u_austrcpy (buf_o, u_str2);
+
+    free(u_str);
+    free(u_str2);
+    return buf_o;
+}

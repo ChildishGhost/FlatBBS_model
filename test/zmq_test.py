@@ -22,7 +22,8 @@ def api(req):
 
 for i in range(10):
     #api('{ "api" : "board_list" ,              "param" : {} }');
-    api('{ "api" : "board_length" ,            "param" : {} }');
+    #api('{ "api" : "board_length" ,            "param" : {} }');
+    api('{ "api" : "utf8_test" ,            "param" : "{安安你好 (✌ﾟ∀ﾟ)☞}" }');
     #api('{ "api" : "board_post_list" ,         "param" : {} }');
     #api('{ "api" : "board_post_length" ,       "param" : {} }');
     #api('{ "api" : "board_inner_post_list" ,   "param" : {} }');

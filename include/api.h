@@ -30,5 +30,7 @@ char *board_post_path (const unsigned, const long);
 // the list of nodes belong to given class path
 char *class_items_list (const char *);
 
+// UTF8 testing
+char *utf8_test (const char *);
 
 #endif /* API_H */

@@ -80,6 +80,9 @@ void dispatch (const char *buf_i, const size_t size_i,
         else if (!strcmp(API_name, "class_items_list")) {
             *buf_o = class_items_list(cpath);
         }
+        else if (!strcmp(API_name, "utf8_test")) {
+            *buf_o = utf8_test (buf_i);
+        }
         else {
             fprintf(stderr, "API [%s] not found\n", API_name);
             *buf_o = NULL;
