@@ -54,14 +54,13 @@ jasson will crash or return incorrect results in the following case:
 ### functions
 
 ```
-    json_array_get(const json_t *, size_t) -> json_t *
     json_object_get(const json_t *, const char *) -> json_t *
+    json_object_size(const json_t *) -> size_t
+
+    json_array_get(const json_t *, size_t) -> json_t *
+    json_array_size(const json_t *) -> size_t
 
     json_string_value(const json_t *) -> const char *
     json_integer_value(const json_t *) -> json_int_t
     json_real_value(const json_t *) -> double
-
-
-    json_array_size(const json_t *) -> size_t
-    json_object_size(const json_t *) -> size_t
 ```
