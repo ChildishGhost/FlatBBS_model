@@ -5,7 +5,9 @@ static json_t     *(*_get)(const json_t *, const char *) = json_object_get;
 static const char *(*_s)(const json_t *) = json_string_value;
 static size_t      (*_s_len)(const json_t *) = json_string_length;
 static json_int_t  (*_i)(const json_t *) = json_integer_value;
-static double      (*_f)(const json_t *) = json_real_value;
+
+// might not use
+// static double      (*_f)(const json_t *) = json_real_value;
 
 static json_t *json_ctor (const char *text) {
 
@@ -59,15 +61,20 @@ static long long _json_get_integer (const char *buf_i, const char *key) {
     return value;
 }
 
-static long long _json_get_floating (const char *buf_i, const char *key) {
-    json_t *root = json_ctor(buf_i);
+// might not use
+// static long long _json_get_floating (const char *buf_i, const char *key) {
+//     json_t *root = json_ctor(buf_i);
+//
+//     int value = _f(_get(root, key));
+//
+//     json_dtor(root);
+//     return value;
+// }
 
-    int value = _f(_get(root, key));
-
-    json_dtor(root);
-    return value;
+// board
+unsigned get_bid (const char *buf_i) {
+    return _json_get_integer(buf_i, "bid");
 }
-
 
 char *get_name (const char *buf_i) {
     return _json_get_string(buf_i, "name");
@@ -93,7 +100,7 @@ unsigned int *get_masters (const char *buf_i) {
     unsigned count = get_masters_count(buf_i);
     unsigned *masters = (unsigned *)malloc(member_size(struct BRD, masters));
 
-    for (int i = 0; i < member_length(struct BRD, masters, unsigned); i++) {
+    for (unsigned i = 0; i < member_length(struct BRD, masters, unsigned); i++) {
         masters[i] = count ? user_name2uid(_s(json_array_get(masters_arr, i))) :
                              0;
     }
@@ -117,9 +124,57 @@ unsigned get_masters_count (const char *buf_i) {
     return count;
 }
 
+enum BOARD_PERM get_perm(const char *buf_i) {
+    char *c_str = _json_get_string(buf_i, "perm");
+    enum BOARD_PERM perm = BOARD_PUBLIC;
 
+    if (c_str) {
+        if (!strcmp(c_str, "private")) {
+            perm =  BOARD_PRIVATE;
+        }
+        else if (!strcmp(c_str, "secret")) {
+            perm =  BOARD_SECRET;
+        }
+    }
+
+    free(c_str);
+
+    return perm;
+
+}
+
+unsigned get_attr (const char *buf_i) {
+    return _json_get_integer(buf_i, "attr");
+}
+
+// user
+unsigned get_uid (const char *buf_i) {
+    return _json_get_integer(buf_i, "uid");
+}
+
+// post
+
+// class
+unsigned get_aid_index (const char *buf_i) {
+    return _json_get_integer(buf_i, "aid_index");
+}
+
+char *get_cpath (const char *buf_i) {
+    return _json_get_string(buf_i, "cpath");
+}
+
+// test
 char *get_param (const char *buf_i) {
     return _json_get_string(buf_i, "param");
+}
+
+// utilities
+unsigned get_offset (const char *buf_i) {
+    return _json_get_integer(buf_i, "offset");
+}
+
+unsigned get_length (const char *buf_i) {
+    return _json_get_integer(buf_i, "length");
 }
 
 // get API name from JSON: { "api" : "name" , ...}
