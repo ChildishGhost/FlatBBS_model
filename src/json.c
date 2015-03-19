@@ -56,6 +56,10 @@ static long long _json_get_floating (const char *buf_i, const char *key) {
     return value;
 }
 
+char *get_param (const char *buf_i) {
+    return _json_get_string(buf_i, "param");
+}
+
 // get API name from JSON: { "api" : "name" , ...}
 char *get_API_name (const char *buf_i) {
     return _json_get_string(buf_i, "api");
