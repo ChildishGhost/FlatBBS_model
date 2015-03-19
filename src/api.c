@@ -1,6 +1,20 @@
 #include "api.h"
 #include "board.h"
 
+#include <string.h>
+
+char *board_new (const char *name, const utf8 *category, const utf8 *title,
+                 const unsigned *masters, const unsigned masters_count,
+                 const enum BOARD_PERM perm, const unsigned attr) {
+    fprintf(stdout, "%s\n", __func__);
+
+    int idx = create_brd (name, category, title,
+                          masters, masters_count,
+                          perm, attr);
+
+    return make_json(50, "{ \"index\" : %d }", idx);
+}
+
 // all boards list
 char *board_list (const unsigned offset, const unsigned length) {
     fprintf(stdout, "%s\n", __func__);

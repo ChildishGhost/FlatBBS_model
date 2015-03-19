@@ -8,6 +8,11 @@
 #ifndef API_H
 #define API_H
 
+// create a new board
+char *board_new (const char *, const utf8 *, const utf8 *,
+                 const unsigned *, const unsigned,
+                 const enum BOARD_PERM, const unsigned);
+
 // all boards list
 char *board_list (const unsigned, const unsigned);
 char *board_length (void);
