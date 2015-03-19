@@ -41,79 +41,41 @@ void dispatch (const char *buf_i, const size_t size_i,
         return;
     }
 
-    unsigned bid;
-    unsigned uid;
-    unsigned length;
-    unsigned offset;
-
     char *API_name = get_API_name(buf_i);
     if (API_name) {
 
         if (!strcmp(API_name, "board_new")) {
-            char *name = get_name(buf_i);
-            utf8 *category = get_category(buf_i);
-            utf8 *title = get_title(buf_i);
-            unsigned *masters = get_masters(buf_i);
-            const unsigned masters_count = get_masters_count(buf_i);
-            const enum BOARD_PERM perm = get_perm(buf_i);
-            const unsigned attr = get_attr(buf_i);
-
-            *buf_o = board_new (name, category, title,
-                                masters, masters_count,
-                                perm, attr);
-            free(name);
-            free(category);
-            free(title);
-            free(masters);
+            *buf_o = board_new (buf_i);
         }
         else if (!strcmp(API_name, "board_list")) {
-            offset = get_offset(buf_i);
-            length = get_length(buf_i);
-            *buf_o = board_list(offset, length);
+            *buf_o = board_list(buf_i);
         }
         else if (!strcmp(API_name, "board_length")) {
-            length = get_length(buf_i);
             *buf_o = board_length();
         }
         else if (!strcmp(API_name, "board_post_list")) {
-            bid = get_bid(buf_i);
-            offset = get_offset(buf_i);
-            length = get_length(buf_i);
-            *buf_o = board_post_list(bid, offset, length);
+            *buf_o = board_post_list(buf_i);
         }
         else if (!strcmp(API_name, "board_post_length")) {
-            bid = get_bid(buf_i);
-            *buf_o = board_post_length(bid);
+            *buf_o = board_post_length(buf_i);
         }
         else if (!strcmp(API_name, "board_inner_post_list")) {
-            bid = get_bid(buf_i);
-            offset = get_offset(buf_i);
-            length = get_length(buf_i);
-            *buf_o = board_inner_post_list(bid, offset, length);
+            *buf_o = board_inner_post_list(buf_i);
         }
         else if (!strcmp(API_name, "board_inner_post_length")) {
-            bid = get_bid(buf_i);
-            *buf_o = board_inner_post_length (bid);
+            *buf_o = board_inner_post_length (buf_i);
         }
         else if (!strcmp(API_name, "user_fav_list")) {
-            uid = get_uid(buf_i);
-            offset = get_offset(buf_i);
-            length = get_length(buf_i);
-            *buf_o = user_fav_list(uid, offset, length);
+            *buf_o = user_fav_list(buf_i);
         }
         else if (!strcmp(API_name, "user_fav_list_length")) {
-            uid = get_uid(buf_i);
-            *buf_o = user_fav_list_length(uid);
+            *buf_o = user_fav_list_length(buf_i);
         }
         else if (!strcmp(API_name, "board_post_path")) {
-             bid = get_bid(buf_i);
-             const unsigned aid_index = get_aid_index(buf_i);
-            *buf_o = board_post_path(bid, aid_index);
+            *buf_o = board_post_path(buf_i);
         }
         else if (!strcmp(API_name, "class_items_list")) {
-            char *cpath = get_cpath(buf_i);
-            *buf_o = class_items_list(cpath);
-            free(cpath);
+            *buf_o = class_items_list(buf_i);
         }
         else if (!strcmp(API_name, "utf8_test")) {
             *buf_o = utf8_test (buf_i);
