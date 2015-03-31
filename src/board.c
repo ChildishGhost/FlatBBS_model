@@ -9,9 +9,9 @@ int create_brd (const char *name, const utf8 *category, const utf8 *title,
     int idx = -1;
 
     if (new_brd) {
-        strncpy(new_brd->name, name, member_size(struct BRD, name));
-        u_strncpy(new_brd->category, category, member_size(struct BRD, category));
-        u_strncpy(new_brd->title, title, member_size(struct BRD, title));
+        memcpy(new_brd->name, name, member_size(struct BRD, name));
+        memcpy(new_brd->category, category, member_size(struct BRD, category));
+        memcpy(new_brd->title, title, member_size(struct BRD, title));
         memcpy(new_brd->masters, masters, member_size(struct BRD, masters));
         new_brd->masters_count = masters_count;
         new_brd->vote = VOTE_NONE;
