@@ -47,7 +47,6 @@ int save_brd (struct BRD *brd, int idx) {
         // hack: rb+ mode requires the existence of the file, just touch one
         system("touch " BRD_PATH);
         save_brd(brd, idx);
-        return -1;
     }
 
     return idx;
