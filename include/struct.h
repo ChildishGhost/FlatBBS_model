@@ -1,3 +1,5 @@
+#include "config.h"
+
 #include <unicode/ustdio.h>
 #include <unicode/ustring.h>
 

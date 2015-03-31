@@ -5,6 +5,7 @@
 import os
 import time
 import zmq
+import random
 
 context = zmq.Context()
 
@@ -17,18 +18,24 @@ def api(req):
     print(">> {}".format(req))
     socket.send(req.encode())
     message = socket.recv()
-    print("<< {} ".format(message.decode()))
+    print("<< {} ({})".format(message.decode(), len(message)))
     time.sleep(0.0001)
 
-for i in range(10):
-    #api('{ "api" : "board_list" ,              "param" : {} }');
-    #api('{ "api" : "board_length" ,            "param" : {} }');
-    api('{ "api" : "utf8_test" ,            "param" : "{安安你好 (✌ﾟ∀ﾟ)☞}" }');
-    #api('{ "api" : "board_post_list" ,         "param" : {} }');
-    #api('{ "api" : "board_post_length" ,       "param" : {} }');
-    #api('{ "api" : "board_inner_post_list" ,   "param" : {} }');
-    #api('{ "api" : "board_inner_post_length" , "param" : {} }');
-    #api('{ "api" : "user_fav_list" ,           "param" : {} }');
-    #api('{ "api" : "user_fav_list_length" ,    "param" : {} }');
-    #api('{ "api" : "board_post_path" ,         "param" : {} }');
-    #api('{ "api" : "class_items_list" ,        "param" : {} }');
+N = 10
+for i in range(N):
+    api(""" {{ "api" : "board_new",
+                "name" : "test{}",
+                "category" : "測試",
+                "title" : "測試用",
+                "masters" : [ "aaa", "bbb", "ccc" ],
+                "perm" : "public",
+                "attr" : {}
+            }}""".format(i, i+1))
+    api('{{ "api" : "board_get" ,              "bid" : {} }}'.format(i))
+    api('{ "api" : "board_length" }')
+
+input()
+
+
+for i in range(N):
+    api('{{ "api" : "board_get" ,              "bid" : {} }}'.format(random.randint(0, N)))

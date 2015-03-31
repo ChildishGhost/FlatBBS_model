@@ -106,9 +106,15 @@ unsigned int *get_masters (const char *buf_i) {
     unsigned count = get_masters_count(buf_i);
     unsigned *masters = (unsigned *)malloc(member_size(struct BRD, masters));
 
-    for (unsigned i = 0; i < member_length(struct BRD, masters, unsigned); i++) {
-        masters[i] = count ? user_name2uid(_s(json_array_get(masters_arr, i))) :
-                             0;
+    if (masters) {
+        for (unsigned i = 0;
+             i < member_length(struct BRD, masters, unsigned); i++) {
+            masters[i] = i < count ?
+                         user_name2uid(_s(json_array_get(masters_arr, i))) : 0;
+        }
+    }
+    else {
+        fprintf(stderr, "master[] allocation error!!");
     }
 
     json_dtor(root);
@@ -201,12 +207,16 @@ char *make_stub (void) {
 // allocate a fixed size json string with parameters
 char *make_json (unsigned sz, const char *fmt, ...) {
 
-    char *buf = (char *)malloc(sz);
-    if (buf) {
+    char *c_str = (char *)malloc(sz*2);
+    utf8 *u_str = (utf8 *)malloc(sz);
+    if (c_str && u_str) {
         va_list ap;
         va_start(ap, fmt);
-        vsprintf(buf, fmt, ap);
+        u_vsprintf(u_str, fmt, ap);
         va_end(ap);
+        u_austrncpy(c_str, u_str, sz*2);
     }
-    return buf;
+    free(u_str);
+
+    return c_str;
 }

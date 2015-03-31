@@ -14,15 +14,60 @@ char *board_new (const char *buf_i) {
     const enum BOARD_PERM perm = get_perm(buf_i);
     const unsigned attr = get_attr(buf_i);
 
-    int idx = create_brd (name, category, title,
-                          masters, masters_count,
-                          perm, attr);
+    int idx = create_brd(name, category, title,
+                         masters, masters_count,
+                         perm, attr);
     free(name);
     free(category);
     free(title);
     free(masters);
 
     return make_json(50, "{ \"index\" : %d }", idx);
+}
+
+char *board_get (const char *buf_i) {
+    fprintf(stdout, "%s\n", __func__);
+
+    char *buf_o = NULL;
+    const unsigned bid = get_bid(buf_i);
+    struct BRD *brd = load_brd(bid);
+    if (brd) {
+        char *masters_array = board_master_array(brd);
+        char *vote = vote2text(brd);
+        char *perm = perm2text(brd);
+        buf_o = make_json(1000, "{ \"name\" : \"%s\","
+                                "  \"category\" : \"%S\","
+                                "  \"title\" : \"%S\","
+                                "  \"masters\" : %s,"
+                                "  \"vote\" : \"%s\","
+                                "  \"perm\" : \"%s\","
+                                "  \"attr\" : %u,"
+                                "  \"num_posts\" : %u,"
+                                "  \"popular\" : %u,"
+                                "  \"last_updated\" : %ld,"
+                                "  \"last_post\" : %ld"
+                                "}", brd->name,
+                                     brd->category,
+                                     brd->title,
+                                     masters_array,
+                                     vote,
+                                     perm,
+                                     brd->attr,
+                                     brd->num_posts,
+                                     brd->popular,
+                                     brd->last_updated,
+                                     brd->last_post);
+
+        free(masters_array);
+        free(vote);
+        free(perm);
+        free(brd);
+    }
+    else {
+        buf_o =  make_stub();
+    }
+
+    return buf_o;
 }
 
 // all boards list

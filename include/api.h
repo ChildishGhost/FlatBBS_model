@@ -11,6 +11,9 @@
 // create a new board
 char *board_new (const char *);
 
+// board elements getters
+char *board_get (const char *);
+
 // all boards list
 char *board_list (const char *);
 char *board_length (void);

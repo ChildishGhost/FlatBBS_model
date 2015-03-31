@@ -47,6 +47,9 @@ void dispatch (const char *buf_i, const size_t size_i,
         if (!strcmp(API_name, "board_new")) {
             *buf_o = board_new (buf_i);
         }
+        else if (!strcmp(API_name, "board_get")) {
+            *buf_o = board_get(buf_i);
+        }
         else if (!strcmp(API_name, "board_list")) {
             *buf_o = board_list(buf_i);
         }
