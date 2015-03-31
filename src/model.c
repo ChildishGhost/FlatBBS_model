@@ -81,7 +81,12 @@ void dispatch (const char *buf_i, const size_t size_i,
             *buf_o = utf8_test (buf_i);
         }
         else {
-            fprintf(stderr, "API [%s] not found\n", API_name);
+            if (API_name) {
+                fprintf(stderr, "API [%s] not found\n", API_name);
+            }
+            else {
+                fprintf(stderr, "API_name is a NULL pointer\n");
+            }
             *buf_o = NULL;
         }
     }
