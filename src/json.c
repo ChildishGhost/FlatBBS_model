@@ -11,11 +11,17 @@ static json_int_t  (*_i)(const json_t *) = json_integer_value;
 
 static json_t *json_ctor (const char *text) {
 
-    // TODO: add needed flags and error handling code here
     json_error_t error;
     json_t *root = json_loads(text, 0, &error);
-
-    return json_is_null(root) ? NULL : root;
+    if (!root || json_is_null(root)) {
+        fprintf(stderr, "JSON object %s is invalid.\n"
+                        "error: on line %d col %d: %s\n", text,
+                                                          error.line,
+                                                          error.column,
+                                                          error.text);
+        return NULL;
+    }
+    return root;
 }
 
 // alias of ref--
