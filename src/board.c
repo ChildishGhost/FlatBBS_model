@@ -117,8 +117,8 @@ char *vote2text (struct BRD *brd) {
     if (vote) {
         if (brd->vote == VOTE_VOTEING)
             sprintf(vote, "voting");
-        else if (brd->vote == VOTE_ROUTLETTE)
-            sprintf(vote, "routlette");
+        else if (brd->vote == VOTE_ROULETTE)
+            sprintf(vote, "roulette");
         else
             sprintf(vote, "none");
     }

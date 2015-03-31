@@ -101,7 +101,7 @@ struct USR_READ {
 enum VOTE_STATUS {                 /* 0:無投票 1:有投票 2:有賭盤 */
   VOTE_NONE,
   VOTE_VOTEING,
-  VOTE_ROUTLETTE
+  VOTE_ROULETTE
 };
 
 enum BOARD_PERM {                  /* 公開 好友 隱版 */
