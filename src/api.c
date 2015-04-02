@@ -1,5 +1,6 @@
 #include "api.h"
 #include "board.h"
+#include "user.h"
 
 #include <string.h>
 
@@ -181,3 +182,85 @@ char *utf8_test (const char *buf) {
     free(param);
     return buf_o;
 }
+
+
+// create a new user
+char *user_new (const char *buf_i) {
+    fprintf(stdout, "%s\n", __func__) ;
+     
+    utf8 *username = get_username(buf_i); // real name
+    char *password = get_password(buf_i);
+    utf8 *usernick = get_usernick(buf_i);
+    char *email = get_email(buf_i);
+    const unsigned month = get_month(buf_i) ; 
+    const unsigned day = get_day(buf_i) ;
+    const enum SEX sex = get_sex(buf_i) ;
+
+    int idx = create_usr(username, password, usernick, 
+                         email, month, day, sex) ;
+
+    free(username) ;
+    free(password) ;
+    free(usernick) ;
+    free(email) ;
+
+    // what does the JSON means ?
+    return make_json(50, "{ \"index\" : %d}", idx) ;
+}
+
+// user elements getters
+char *user_get (const char *buf_i) {
+    fprintf(stdout, "%s\n", __func__) ;
+    
+    char *buf_o = NULL ;
+    const unsigned uid = get_uid(buf_i) ;
+    struct USER_BASE *usr = load_usr(uid) ;
+    if(usr) {
+        char *perm_cstr = usr_perm2text(usr) ;
+        char *sex_cstr = usr_sex2text(usr) ;
+        buf_o = make_json(1000, "{ \"username\"    : \"%s\" , "
+                                "  \"password\"    : \"%s\" , "
+                                "  \"usernick\"    : \"%S\" , "
+                                "  \"from\"        : \"%S\" , "
+                                "  \"perm\"        : \"%s\" , "
+                                "  \"signature\"   :   %u   , "
+                                "  \"num_logins\"  :   %u   , "
+                                "  \"num_posts\"   :   %u   , "
+                                "  \"good_article\":   %u   , "
+                                "  \"bad_article\" :   %u   , "
+                                "  \"first_login\" :   %ld  , "
+                                "  \"last_login\"  :   %ld  , "
+                                "  \"email\"       : \"%s\" , "
+                                "  \"month\"       :   %c   , "
+                                "  \"day\"         :   %c   , "
+                                "  \"sex\"         : \"%s\"   "
+                                "}", usr->username
+                                   , usr->password
+                                   , usr->usernick
+                                   , usr->from
+                                   , perm_cstr
+                                   , usr->signature
+                                   , usr->num_logins
+                                   , usr->num_posts
+                                   , usr->good_article
+                                   , usr->bad_article
+                                   , usr->first_login
+                                   , usr->last_login
+                                   , usr->email
+                                   , usr->extra.month
+                                   , usr->extra.day
+                                   , sex_cstr) ;
+
+    free(perm_cstr) ;
+    free(sex_cstr) ;
+    }
+    else{
+        buf_o = make_stub() ;
+    }
+    return buf_o ;
+}
+
+// all users' list
+//TODO: char *user_list (const char *);
+//TODO: char *user_length (const char *);
+
