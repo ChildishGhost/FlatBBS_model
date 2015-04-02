@@ -219,10 +219,10 @@ char *get_email(const char *buf_i) {
     return _json_get_string(buf_i, "email") ;
 }
 unsigned get_month(const char *buf_i) {
-    return _json_get_string(buf_i, "month") ;
+    return _json_get_integer(buf_i, "month") ;
 }
 unsigned get_day(const char *buf_i) {
-    return _json_get_string(buf_i, "day") ;
+    return _json_get_integer(buf_i, "day") ;
 }
 
 enum SEX get_sex(const char *buf_i) {
