@@ -44,4 +44,12 @@ unsigned get_length(const char *);
 char *make_stub (void);
 char *make_json (unsigned, const char *, ...);
 
+char *get_username(const char *) ;
+char *get_password(const char *) ;
+utf8 *get_usernick(const char *) ;
+char *get_email(const char *) ;
+unsigned get_month(const char *) ;
+unsigned get_day(const char *) ;
+enum SEX get_sex(const char *) ;
+
 #endif /* JSON_H */
