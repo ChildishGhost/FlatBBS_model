@@ -164,6 +164,49 @@ unsigned get_uid (const char *buf_i) {
     return _json_get_integer(buf_i, "uid");
 }
 
+char *get_username (const char *buf_i) {
+    return _json_get_string(buf_i, "username");
+}
+
+char *get_password (const char *buf_i) {
+    return _json_get_string(buf_i, "password");
+}
+
+utf8 *get_usernick (const char *buf_i) {
+    return _json_get_string_u(buf_i, "usernick",
+                              member_size(struct USER_BASE, usernick),
+                              member_length(struct USER_BASE, usernick, utf8));
+}
+char *get_email (const char *buf_i) {
+    return _json_get_string(buf_i, "email");
+}
+
+unsigned get_month (const char *buf_i) {
+    return _json_get_integer(buf_i, "month");
+}
+
+unsigned get_day(const char *buf_i) {
+    return _json_get_integer(buf_i, "day");
+}
+
+enum SEX get_sex(const char *buf_i) {
+    char *str = _json_get_string(buf_i, "sex");
+    enum SEX sex = SEX_UNKNOWN;
+
+    if (str) {
+        if (!strcmp(str, "male")) {
+            sex = SEX_MALE;
+        }
+        else if (!strcmp(str, "female")) {
+            sex = SEX_FEMALE;
+        }
+    }
+
+    free(str);
+
+    return sex;
+}
+
 // post
 
 // class
@@ -204,17 +247,18 @@ char *make_stub (void) {
     return buf;
 }
 
+
 // allocate a fixed size json string with parameters
 char *make_json (unsigned sz, const char *fmt, ...) {
 
-    char *c_str = (char *)malloc(sz*2);
-    utf8 *u_str = (utf8 *)malloc(sz);
+    char *c_str = (char *)malloc(sz);
+    utf8 *u_str = (utf8 *)malloc(sz*sizeof(utf8));
     if (c_str && u_str) {
         va_list ap;
         va_start(ap, fmt);
         u_vsprintf(u_str, fmt, ap);
         va_end(ap);
-        u_austrncpy(c_str, u_str, sz*2);
+        u_austrncpy(c_str, u_str, sz);
     }
     free(u_str);
 

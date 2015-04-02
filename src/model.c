@@ -68,6 +68,15 @@ void dispatch (const char *buf_i, const size_t size_i,
         else if (!strcmp(API_name, "board_inner_post_length")) {
             *buf_o = board_inner_post_length (buf_i);
         }
+        else if (!strcmp(API_name, "user_new")) {
+            *buf_o = user_new(buf_i);
+        }
+        else if (!strcmp(API_name, "user_get")) {
+            *buf_o = user_get(buf_i);
+        }
+        else if (!strcmp(API_name, "user_length")) {
+            *buf_o = user_length();
+        }
         else if (!strcmp(API_name, "user_fav_list")) {
             *buf_o = user_fav_list(buf_i);
         }

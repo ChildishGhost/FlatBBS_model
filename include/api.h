@@ -26,6 +26,17 @@ char *board_post_length (const char *);
 char *board_inner_post_list (const char *);
 char *board_inner_post_length (const char *);
 
+
+// create a new user
+char *user_new (const char *);
+
+// user elements getters
+char *user_get (const char *);
+
+// all users' list
+char *user_list (const char *);
+char *user_length (void);
+
 // favorite boards list of a user
 char *user_fav_list (const char *);
 char *user_fav_list_length (const char *);
@@ -38,5 +49,8 @@ char *class_items_list (const char *);
 
 // UTF8 testing
 char *utf8_test (const char *);
+
+
+
 
 #endif /* API_H */
