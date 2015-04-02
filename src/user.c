@@ -91,3 +91,57 @@ int USR_length (void) {
     return user_length ;
 }
 
+// load a user structure from USR[idx]
+struct USER_BASE *load_usr (int idx) {
+    if (idx == -1)
+        return NULL ;
+
+    struct USER_BASE *usr = (struct USER_BASE *)malloc(sizeof(struct USER_BASE)) ;
+
+    if (usr) {
+        FILE *fp = fopen(USR_PATH, "rb") ;
+        if (fp) {
+            usr = read_struct_from_file(sizeof(struct USER_BASE), idx, fp);
+            fclose(fp);
+        }
+    }
+
+    return usr;
+}
+
+char *usr_perm2text (struct USER_BASE *usr){
+    char *perm = (char *)malloc(10*sizeof(char)) ;
+    switch(usr->perm){
+        case PERM_SYSOP: 
+            strcpy(perm, "sysop") ;
+            break ;
+        case PERM_ADMIN:
+            strcpy(perm, "admin") ;
+            break ;
+        case PERM_USER:
+            strcpy(perm, "user") ;
+            break ;
+        case PERM_BOT:
+            strcpy(perm, "bot") ;
+            break ;
+        default:
+            strcpy(perm, "guest") ;
+    }
+    return perm;
+}
+
+char *usr_sex2text (struct USER_BASE *usr){
+    char *sex = (char *)malloc(10*sizeof(char)) ; 
+    switch(usr->extra.sex){
+        case SEX_MALE:
+            strcpy(sex, "male") ;
+            break ;
+        case SEX_FEMALE:
+            strcpy(sex, "female") ;
+            break ;
+        default:
+            strcpy(sex, "unknown") ;
+    }
+    return sex ;
+}
+
