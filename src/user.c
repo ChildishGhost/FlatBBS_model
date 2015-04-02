@@ -25,7 +25,6 @@ char *user_uid2name (const unsigned uid) {
     return username;
 }
 
-// return value: uid
 int create_usr(const utf8 *username, const char *password, const utf8 *usernick,
                const char *email, const unsigned month, const unsigned day, const enum SEX sex) {
     struct USER_BASE *new_usr = (struct USER_BASE *)malloc(sizeof(struct USER_BASE)) ;
@@ -50,16 +49,45 @@ int create_usr(const utf8 *username, const char *password, const utf8 *usernick,
         new_usr->first_login = time(NULL) ;
         new_usr->last_login = time(NULL) ;
         new_usr->staytime = 0ULL ;
-        // log initialize ??
+        // user log initialize ??
         new_usr->extra.money = 0 ;
         new_usr->extra.gold = 0 ;
 
         idx = USR_length() ;
+        new_usr->uid = idx ;
         idx = save_usr(new_usr, idx) ;
 
         free(new_usr) ;
     }
 
     return idx ;
+}
+
+// usr must not be null
+// without system write permission, function will fall into infinite loop
+int save_usr(struct USER_BASE *usr, int idx) {
+    FILE *fp = fopen(USR_PATH, "rb+") ;
+    if(fp) {
+        idx = write_struct_from_file(usr, sizeof(struct USER_BASE), idx, fp) ;
+        fclose(fp) ;
+    }
+    else {
+        fprintf(stderr, "error on fopen() in %s\n", __func__) ;
+        // hack: rb+ mode requires the existence of the file, just touch one
+        system("touch " USR_PATH) ;
+        save_usr(usr, idx) ;
+    }
+    return idx ;
+}
+
+int USR_length (void) {
+    int user_length = 0 ;
+
+    FILE *fp = fopen(USR_PATH, "rb") ;
+    if(fp) {
+        user_length = struct_count_of_file(sizeof(struct USER_BASE), fp) ;
+        fclose(fp) ;
+    }
+    return user_length ;
 }
 
