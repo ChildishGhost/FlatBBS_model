@@ -39,4 +39,16 @@ char *class_items_list (const char *);
 // UTF8 testing
 char *utf8_test (const char *);
 
+
+
+// create a new user
+char *user_new (const char *);
+
+// user elements getters
+char *user_get (const char *);
+
+// all users' list
+char *user_list (const char *);
+char *user_length (const char *);
+
 #endif /* API_H */
