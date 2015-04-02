@@ -21,7 +21,7 @@ def api(req):
     print("<< {} ({})".format(message.decode(), len(message)))
     time.sleep(0.0001)
 
-N = 10
+N = 10000
 for i in range(N):
     #api(""" {{ "api" : "board_new",
     #            "name" : "test{}",
@@ -45,8 +45,8 @@ for i in range(N):
     api('{{ "api" : "user_get" ,              "uid" : {} }}'.format(i+1))
     api('{ "api" : "user_length" }')
 
-#input()
-#
-#
-#for i in range(N):
-#    api('{{ "api" : "board_get" ,              "bid" : {} }}'.format(random.randint(0, N)))
+input()
+
+
+for i in range(N):
+    api('{{ "api" : "user_get" ,              "uid" : {} }}'.format(random.randint(0, N)+1))
