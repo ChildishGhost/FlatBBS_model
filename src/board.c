@@ -45,7 +45,10 @@ int save_brd (struct BRD *brd, int idx) {
     else {
         fprintf(stderr,"error on fopen() in %s\n", __func__);
         // hack: rb+ mode requires the existence of the file, just touch one
-        system("touch " BRD_PATH);
+        FILE *t = fopen(BRD_PATH, "ab");
+        if (t) {
+            fclose(t);
+        }
         save_brd(brd, idx);
     }
 
