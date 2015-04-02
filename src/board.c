@@ -150,7 +150,7 @@ char *board_master_array (struct BRD *brd) {
 
 // vote status in text form
 char *vote2text (struct BRD *brd) {
-    char *vote = (char *)malloc(member_length(struct BRD, vote, enum VOTE_STATUS));
+    char *vote = (char *)malloc(20);
     if (vote) {
         if (brd->vote == VOTE_VOTEING)
             sprintf(vote, "voting");
@@ -165,7 +165,7 @@ char *vote2text (struct BRD *brd) {
 
 // board perm in text form
 char *perm2text (struct BRD *brd) {
-    char *perm = (char *)malloc(member_length(struct BRD, perm, enum BOARD_PERM));
+    char *perm = (char *)malloc(20);
     if (perm) {
         if (brd->perm == BOARD_PRIVATE)
             sprintf(perm, "private");
