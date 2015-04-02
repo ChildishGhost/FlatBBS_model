@@ -27,7 +27,7 @@ char *user_uid2name (const unsigned uid) {
 
 // return value: uid
 int create_usr(const utf8 *username, const char *password, const utf8 *usernick,
-               const char *email, const unsigned mounth, const unsigned day, const enum SEX sex) {
+               const char *email, const unsigned month, const unsigned day, const enum SEX sex) {
     struct USER_BASE *new_usr = (struct USER_BASE *)malloc(sizeof(struct USER_BASE)) ;
     int idx = -1 ;
     if (new_usr) {
@@ -35,11 +35,11 @@ int create_usr(const utf8 *username, const char *password, const utf8 *usernick,
         memcpy(new_usr->password, password, member_size(struct USER_BASE, password)) ;
         memcpy(new_usr->usernick, usernick, member_size(struct USER_BASE, usernick)) ;
         memcpy(new_usr->email, email, member_size(struct USER_BASE, email)) ;
-        new_usr->extra.mounth = mounth ;
+        new_usr->extra.month = month ;
         new_usr->extra.day = day ;
         new_usr->extra.sex = sex ;
          
-        new_usr->from = NULL ;
+        // new_usr->from = user ip ;
         new_usr->perm = PERM_USER ;
         // ufo initialize ??
         new_usr->signature = 0 ; // default signature file number
