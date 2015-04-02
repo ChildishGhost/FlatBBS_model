@@ -25,7 +25,7 @@ char *user_uid2name (const unsigned uid) {
     return username;
 }
 
-int create_usr(const utf8 *username, const char *password, const utf8 *usernick,
+int create_usr(const char *username, const char *password, const utf8 *usernick,
                const char *email, const unsigned month, const unsigned day, const enum SEX sex) {
     struct USER_BASE *new_usr = (struct USER_BASE *)malloc(sizeof(struct USER_BASE)) ;
     int idx = -1 ;

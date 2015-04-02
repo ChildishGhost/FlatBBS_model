@@ -188,7 +188,7 @@ char *utf8_test (const char *buf) {
 char *user_new (const char *buf_i) {
     fprintf(stdout, "%s\n", __func__) ;
      
-    utf8 *username = get_username(buf_i); // real name
+    char *username = get_username(buf_i);
     char *password = get_password(buf_i);
     utf8 *usernick = get_usernick(buf_i);
     char *email = get_email(buf_i);
