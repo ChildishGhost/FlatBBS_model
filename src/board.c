@@ -9,6 +9,7 @@ int create_brd (const char *name, const utf8 *category, const utf8 *title,
     int idx = -1;
 
     if (new_brd) {
+
         memcpy(new_brd->name, name, member_size(struct BRD, name));
         memcpy(new_brd->category, category, member_size(struct BRD, category));
         memcpy(new_brd->title, title, member_size(struct BRD, title));
@@ -24,6 +25,39 @@ int create_brd (const char *name, const utf8 *category, const utf8 *title,
 
         idx = BRD_length();
         idx = save_brd(new_brd, idx);
+
+        // special case, create the data/brd directory
+        if (idx == 1) {
+            struct stat st = {0};
+            // check if brd exists
+            if ((stat(brd_PATH, &st))) {
+                mkdir(brd_PATH, 0700);
+            }
+        }
+
+        // create the board directory and related files
+        char buf[100];
+        sprintf(buf, "%s%s", brd_PATH, new_brd->name);
+        if (mkdir(buf, 0700)) {
+            fprintf(stderr, "error on mkdir() in %s\n", __func__);
+        }
+
+        sprintf(buf, "%s%s/inner", brd_PATH, new_brd->name);
+        if (mkdir(buf, 0700)) {
+            fprintf(stderr, "error on mkdir() in %s\n", __func__);
+        }
+
+        sprintf(buf, "%s%s/POSTS", brd_PATH, new_brd->name);
+        FILE *t = fopen(buf, "ab");
+        if (t) {
+            fclose(t);
+        }
+
+        sprintf(buf, "%s%s/PINNED", brd_PATH, new_brd->name);
+        t = fopen(buf, "ab");
+        if (t) {
+            fclose(t);
+        }
 
         free(new_brd);
     }
