@@ -6,11 +6,7 @@
 # ------------------------------------------------------ #
 
 all:
-	#@cd lib; make
 	@cd src; make
-	#@cd util; make
 
 clean:
-	#@cd lib; make clean
 	@cd src; make clean
-	#@cd util; make clean
