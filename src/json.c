@@ -204,6 +204,45 @@ char *make_stub (void) {
     return buf;
 }
 
+char *get_username(const char *buf_i) {
+    return _json_get_string(buf_i, "username") ;
+}
+char *get_password(const char *buf_i) {
+    return _json_get_string(buf_i, "password") ;
+}
+utf8 *get_usernick(const char *buf_i) {
+    return _json_get_string_u(buf_i, "usernick", 
+                              member_size(struct USER_BASE, usernick), 
+                              member_length(struct USER_BASE, usernick, utf8)) ;
+}
+char *get_email(const char *buf_i) {
+    return _json_get_string(buf_i, "email") ;
+}
+unsigned get_month(const char *buf_i) {
+    return _json_get_string(buf_i, "month") ;
+}
+unsigned get_day(const char *buf_i) {
+    return _json_get_string(buf_i, "day") ;
+}
+
+enum SEX get_sex(const char *buf_i) {
+    char* str = _json_get_string(buf_i, "sex") ;
+    enum SEX sex = SEX_UNKNOWN ;
+    
+    if(str) {
+        if(!strcmp(str, "male")){
+            sex = SEX_MALE ;
+        }
+        else if(!strcmp(str, "female")){
+            sex = SEX_FEMALE ;
+        }
+    }
+ 
+    free(str) ;
+
+    return sex ;
+}
+
 // allocate a fixed size json string with parameters
 char *make_json (unsigned sz, const char *fmt, ...) {
 
