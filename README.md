@@ -1,34 +1,42 @@
-# FlatBBS model
+FlatBBS model
+==
 
 model for the FlatBBS project
 
+Requirements
+==
 
-# Dependency
+* [clang](http://clang.llvm.org) >= 3.6.0
+* [GNU Make](https://www.gnu.org/software/make) >= 4.1
+* [icu](http://site.icu-project.org/download) >= 55.1
+* [zmq](http://zeromq.org/intro:get-the-software) >= 4.0.5
+* [jansson](https://github.com/akheron/jansson/releases) >= 2.7
 
-## development environment
+For testing environment:
 
-- Archlinux (Linux 3.19.3-3-ARCH #1 SMP PREEMPT Wed Apr 8 14:10:00 CEST 2015 x86_64 GNU/Linux)
+* [Python3](https://www.python.org) >= 3.4.3
+* [pyzmq](https://pypi.python.org/pypi/pyzmq) 14.5.0 or higher
 
-- clang (clang version 3.6.0 (tags/RELEASE_360/final))
+Installion
+==
 
-- Python3 (Python 3.4.3)
+TBD
 
-- make (GNU Make 4.1)
 
-## third party libraries
+License
+==
 
-- [icu 55.1](http://site.icu-project.org/download)
+Third party libraries
+--
 
-  + [ICU License](https://ssl.icu-project.org/repos/icu/icu/trunk/license.html)
+* [icu](http://site.icu-project.org/download)
+  * [ICU License](https://ssl.icu-project.org/repos/icu/icu/trunk/license.html)
+* [zmq](http://zeromq.org/intro:get-the-software)
+  * [GPL v3](http://zeromq.org/area:licensing)
+* [jansson](https://github.com/akheron/jansson/releases)
+  * [MIT](https://github.com/akheron/jansson/blob/master/LICENSE)
 
-- [zmq 4.0.5](http://zeromq.org/intro:get-the-software)
+For testing environment:
 
-  + [GPL v3](http://zeromq.org/area:licensing)
-
-- [pyzmq 14.5.0](https://pypi.python.org/pypi/pyzmq)
-
-  + [LGPL+BSD](https://pypi.python.org/pypi/pyzmq)
-
-- [jansson 2.7](https://github.com/akheron/jansson/releases)
-
-  + [MIT](https://github.com/akheron/jansson/blob/master/LICENSE)
+* [pyzmq](https://pypi.python.org/pypi/pyzmq)
+  * [LGPL+BSD](https://pypi.python.org/pypi/pyzmq)
