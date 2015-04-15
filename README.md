@@ -19,8 +19,16 @@ model for the FlatBBS project
 
 - [icu 55.1](http://site.icu-project.org/download)
 
+  + [ICU License](https://ssl.icu-project.org/repos/icu/icu/trunk/license.html)
+
 - [zmq 4.0.5](http://zeromq.org/intro:get-the-software)
+
+  + [GPL v3](http://zeromq.org/area:licensing)
 
 - [pyzmq 14.5.0](https://pypi.python.org/pypi/pyzmq)
 
+  + [LGPL+BSD](https://pypi.python.org/pypi/pyzmq)
+
 - [jansson 2.7](https://github.com/akheron/jansson/releases)
+
+  + [MIT](https://github.com/akheron/jansson/blob/master/LICENSE)
