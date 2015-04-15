@@ -34,9 +34,7 @@ struct __api_route {
     char* (*func)(const char*);
 };
 
-#define str(x) #x
 #define DEF_API_ROUTE(api_name) { str(api_name), api_name }
-#define END_API_ROUTE { NULL, NULL }
 
 const struct __api_route api_route[] = {
     DEF_API_ROUTE(board_new),
@@ -48,18 +46,15 @@ const struct __api_route api_route[] = {
     DEF_API_ROUTE(board_inner_post_list),
     DEF_API_ROUTE(board_inner_post_length),
     DEF_API_ROUTE(board_post_path),
-    END_API_ROUTE
 };
 
 #undef DEF_API_ROUTE
-#undef END_API_ROUTE
-#undef str
 
 // dispatch a message to a coresponding API call
 // returning a message to be sent to ZMQ
 void dispatch (const char *buf_i, const size_t size_i,
                      char **buf_o, size_t *size_o) {
-    int i;
+    unsigned int i;
     /* Init output parameters */
     *buf_o = NULL;
     *size_o = 0;
@@ -73,13 +68,13 @@ void dispatch (const char *buf_i, const size_t size_i,
         return;
     }
 
-    for (i = 0; api_route[i].name != NULL; ++i) {
+    for (i = 0; i < countof(api_route); ++i) {
         if (!strcmp(API_name, api_route[i].name)) {
             *buf_o = (*api_route[i].func)(buf_i);
             break;
         }
     }
-    if (api_route[i].name == NULL) {
+    if (i == countof(api_route)) {
         fprintf(stderr, "API not found: `%s`.\n", API_name);
     }
 

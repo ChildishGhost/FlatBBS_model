@@ -16,6 +16,10 @@
 #ifndef STRUCT_H
 #define STRUCT_H
 
+#define str(x) #x
+#define xstr(x) str(x)
+#define countof(arr) (sizeof(arr) / sizeof(arr[0]))
+
 // this macro is stolen from here
 // https://stackoverflow.com/questions/3553296/c-sizeof-single-struct-member
 #define member_size(type, member) (sizeof(((type *)0)->member))
