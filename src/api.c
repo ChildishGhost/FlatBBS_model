@@ -81,7 +81,7 @@ char *board_list (const char *buf_i) {
     return make_stub();
 }
 
-char *board_length (void) {
+char *board_length (const char *buf_i) {
     fprintf(stdout, "%s\n", __func__);
     return make_json(50, "{ \"length\" : %d }", BRD_length());
 }
@@ -217,7 +217,7 @@ char *user_get (const char *buf_i) {
 // all users' list
 //TODO: char *user_list (const char *);
 
-char *user_length (void) {
+char *user_length (const char *buf_i) {
     fprintf(stdout, "%s\n", __func__);
     return make_json(50, "{ \"length\" : %d }", USR_length());
 }

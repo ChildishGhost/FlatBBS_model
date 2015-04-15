@@ -16,7 +16,7 @@ char *board_get (const char *);
 
 // all boards list
 char *board_list (const char *);
-char *board_length (void);
+char *board_length (const char *);
 
 // all posts of one board
 char *board_post_list (const char *);
@@ -35,7 +35,7 @@ char *user_get (const char *);
 
 // all users' list
 char *user_list (const char *);
-char *user_length (void);
+char *user_length (const char *);
 
 // favorite boards list of a user
 char *user_fav_list (const char *);

@@ -27,86 +27,66 @@
 void __zmq_free_init_data (void *data, void *hint) {
     free(data);
     data = NULL;
-}
+} 
 
+struct __api_route {
+    char *name;
+    char* (*func)(const char*);
+};
+
+#define str(x) #x
+#define DEF_API_ROUTE(api_name) { str(api_name), api_name }
+#define END_API_ROUTE { NULL, NULL }
+
+const struct __api_route api_route[] = {
+    DEF_API_ROUTE(board_new),
+    DEF_API_ROUTE(board_get),
+    DEF_API_ROUTE(board_list),
+    DEF_API_ROUTE(board_length),
+    DEF_API_ROUTE(board_post_list),
+    DEF_API_ROUTE(board_post_length),
+    DEF_API_ROUTE(board_inner_post_list),
+    DEF_API_ROUTE(board_inner_post_length),
+    DEF_API_ROUTE(board_post_path),
+    END_API_ROUTE
+};
+
+#undef DEF_API_ROUTE
+#undef END_API_ROUTE
+#undef str
 
 // dispatch a message to a coresponding API call
 // returning a message to be sent to ZMQ
 void dispatch (const char *buf_i, const size_t size_i,
                      char **buf_o, size_t *size_o) {
+    int i;
+    /* Init output parameters */
+    *buf_o = NULL;
+    *size_o = 0;
 
-    if (!buf_i || !size_i) {
-        *buf_o = NULL;
-        *size_o = 0;
+    /* Check input */
+    if (!buf_i || !size_i) return;
+
+    char *API_name = get_API_name(buf_i);
+    if (!API_name) {
+        fprintf(stderr, "Parameter required: `api`.\n");
         return;
     }
 
-    char *API_name = get_API_name(buf_i);
-    if (API_name) {
-
-        if (!strcmp(API_name, "board_new")) {
-            *buf_o = board_new (buf_i);
+    for (i = 0; api_route[i].name != NULL; ++i) {
+        if (!strcmp(API_name, api_route[i].name)) {
+            *buf_o = (*api_route[i].func)(buf_i);
+            break;
         }
-        else if (!strcmp(API_name, "board_get")) {
-            *buf_o = board_get(buf_i);
-        }
-        else if (!strcmp(API_name, "board_list")) {
-            *buf_o = board_list(buf_i);
-        }
-        else if (!strcmp(API_name, "board_length")) {
-            *buf_o = board_length();
-        }
-        else if (!strcmp(API_name, "board_post_list")) {
-            *buf_o = board_post_list(buf_i);
-        }
-        else if (!strcmp(API_name, "board_post_length")) {
-            *buf_o = board_post_length(buf_i);
-        }
-        else if (!strcmp(API_name, "board_inner_post_list")) {
-            *buf_o = board_inner_post_list(buf_i);
-        }
-        else if (!strcmp(API_name, "board_inner_post_length")) {
-            *buf_o = board_inner_post_length (buf_i);
-        }
-        else if (!strcmp(API_name, "user_new")) {
-            *buf_o = user_new(buf_i);
-        }
-        else if (!strcmp(API_name, "user_get")) {
-            *buf_o = user_get(buf_i);
-        }
-        else if (!strcmp(API_name, "user_length")) {
-            *buf_o = user_length();
-        }
-        else if (!strcmp(API_name, "user_fav_list")) {
-            *buf_o = user_fav_list(buf_i);
-        }
-        else if (!strcmp(API_name, "user_fav_list_length")) {
-            *buf_o = user_fav_list_length(buf_i);
-        }
-        else if (!strcmp(API_name, "board_post_path")) {
-            *buf_o = board_post_path(buf_i);
-        }
-        else if (!strcmp(API_name, "class_items_list")) {
-            *buf_o = class_items_list(buf_i);
-        }
-        else if (!strcmp(API_name, "utf8_test")) {
-            *buf_o = utf8_test (buf_i);
-        }
-        else {
-            if (API_name) {
-                fprintf(stderr, "API [%s] not found\n", API_name);
-            }
-            else {
-                fprintf(stderr, "API_name is a NULL pointer\n");
-            }
-            *buf_o = NULL;
-        }
+    }
+    if (api_route[i].name == NULL) {
+        fprintf(stderr, "API not found: `%s`.\n", API_name);
     }
 
     *size_o = *buf_o ? strlen(*buf_o) : 0;
+
     free(API_name);
     API_name = NULL;
-
 }
 
 
