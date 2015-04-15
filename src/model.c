@@ -27,6 +27,7 @@
 void __zmq_free_init_data (void *data, void *hint) {
     free(data);
     data = NULL;
+    hint = NULL;
 }
 
 struct __api_route {
