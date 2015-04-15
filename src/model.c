@@ -27,7 +27,7 @@
 void __zmq_free_init_data (void *data, void *hint) {
     free(data);
     data = NULL;
-} 
+}
 
 struct __api_route {
     char *name;
@@ -46,6 +46,12 @@ const struct __api_route api_route[] = {
     DEF_API_ROUTE(board_inner_post_list),
     DEF_API_ROUTE(board_inner_post_length),
     DEF_API_ROUTE(board_post_path),
+    DEF_API_ROUTE(user_new),
+    DEF_API_ROUTE(user_get),
+    DEF_API_ROUTE(user_length),
+    DEF_API_ROUTE(user_fav_list),
+    DEF_API_ROUTE(user_fav_list_length),
+    DEF_API_ROUTE(class_items_list),
 };
 
 #undef DEF_API_ROUTE
