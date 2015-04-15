@@ -53,38 +53,5 @@ int main (void) {
     free(bar);
 
 
-    puts("structure file write/read test");
-    U_STRING_DECL(fmt, "工具人 %d 號四我", 30);
-    f = fopen("qq", "w");
-    for (int i = 0; i < 10; i++) {
-        struct FOO *foo = (struct FOO *)malloc(sizeof(struct FOO));
-        sprintf(foo->name, "tool %d", i);
-        u_sprintf_u(foo->nick, fmt, i);
-        _write_struct_from_file (foo, sizeof(struct FOO), i, f);
-        free(foo);
-    }
-    fclose(f);
-
-    f = fopen("qq", "r");
-    for (int i = 0; i < 10; i++) {
-        struct FOO *foo = (struct FOO *)_read_struct_from_file (sizeof(struct FOO), i, f);
-        u_printf("[%s] : %S\n", foo->name, foo->nick);
-        free(foo);
-    }
-    fclose(f);
-
-    puts("randomly fseek");
-    srand(time(0));
-    f = fopen("qq", "r");
-    for (int i = 0; i < 1000000; i++) {
-        unsigned r = ((rand() % 10) +i) % 10;
-        printf("# %d foo[%d]: ", i, r);
-        struct FOO *foo = (struct FOO *)_read_struct_from_file (sizeof(struct FOO), r, f);
-        u_printf("[%s] : %S\n", foo->name, foo->nick);
-        fflush(stdout);
-        free(foo);
-    }
-    fclose(f);
-
     return 0;
 }
