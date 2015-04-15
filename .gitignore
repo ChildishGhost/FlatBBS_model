@@ -2,3 +2,4 @@ model
 *.o
 data/*
 *.swp
+include/config.h
